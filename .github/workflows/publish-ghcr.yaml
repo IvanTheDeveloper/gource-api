@@ -1,0 +1,19 @@
+name: Docker Image CI for GHCR
+
+on: 
+  push
+
+jobs:
+  builds_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build and publish Docker image
+        run: |
+          REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          REPO_NAME=$(echo "${{ github.event.repository.name }}" | tr '[:upper:]' '[:lower:]')
+          echo "${{ secrets.GH_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          docker build . --tag ghcr.io/$REPO_OWNER/$REPO_NAME:latest
+          docker push ghcr.io/$REPO_OWNER/$REPO_NAME:latest

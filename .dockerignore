@@ -1,0 +1,19 @@
+# Git
+.git/
+.github/
+.gitignore
+.gitattributes
+README.md
+LICENSE
+
+# Docker
+docker-compose.yml
+Dockerfile
+.docker
+.dockerignore
+!requirements.txt
+!entrypoint.sh
+!run.py
+
+# Environments
+.env.example

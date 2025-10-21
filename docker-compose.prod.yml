@@ -1,0 +1,8 @@
+services:
+  app:
+    build:
+      context: .
+    environment:
+      - CONTAINER_PORT=${CONTAINER_PORT:-8443}
+    ports:
+      - ${HOST_PORT:-8443}:${CONTAINER_PORT:-8443}
