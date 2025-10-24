@@ -16,4 +16,10 @@ Dockerfile
 !run.py
 
 # Environments
-.env.example
+.env*
+
+# Miscellaneous
+Makefile
+
+# IDEs and editors
+.vscode/

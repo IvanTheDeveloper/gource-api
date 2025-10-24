@@ -2,7 +2,11 @@ services:
   app:
     build:
       context: .
-    environment:
-      - CONTAINER_PORT=${CONTAINER_PORT:-8443}
+      dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
-      - ${HOST_PORT:-8443}:${CONTAINER_PORT:-8443}
+      - 8080:8443
+    environment: 
+      - ENV=production
+      - CONTAINER_PORT=8443
+    command:

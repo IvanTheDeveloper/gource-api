@@ -1,11 +1,14 @@
 name: Docker Image CI for GHCR
 
-on: 
-  push
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   builds_and_publish:
     runs-on: ubuntu-latest
+    if: ${{ secrets.DOCKER_PUBLISH_ENABLED != 'false' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

@@ -1,16 +1,21 @@
 services:
   app:
+    # Build time, parameters come always from .env
     build:
       context: .
-    env_file:
+      dockerfile: Dockerfile
+    # Runtime outside container, parameters come always from .env 
+    # Environment variables set here are ony available in Runtime inside container
+    restart: no
+    ports:
+      - ${HOST_PORT}:${CONTAINER_PORT}
+    env_file: # defaults to .env
       - .env
-    environment:
+    environment: # overrrides env_file variables
+      - ENV=development
       - PYTHONDONTWRITEBYTECODE=1
       - FLASK_DEBUG=-1
       - FLASK_ENV=development
-      - CONTAINER_PORT=${CONTAINER_PORT:-8080}
-    ports:
-      - ${HOST_PORT:-8080}:${CONTAINER_PORT:-8080}
     volumes:
       - .:/app
     command:

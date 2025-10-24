@@ -1,8 +1,5 @@
 FROM python:3.11-slim
 
-# Avoid __pycache__ and .pyc files generation
-ENV PYTHONDONTWRITEBYTECODE=1
-
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
@@ -31,9 +28,10 @@ RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser \
     && chown -R appuser:appgroup /app
 USER appuser
 
-# Define default port, can be overridden at runtime
-ARG PORT=8080
-EXPOSE ${PORT}
+# Define default port, can be overridden by compose or env at runtime
+ENV CONTAINER_PORT=8080
+EXPOSE ${CONTAINER_PORT}
+RUN echo "Container will run on port: ${CONTAINER_PORT}"
 
 # Define entrypoint and default command
 ENTRYPOINT ["/entrypoint.sh"]
